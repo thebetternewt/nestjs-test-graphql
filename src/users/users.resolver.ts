@@ -1,13 +1,11 @@
-import {
-  NotFoundException,
-  UnprocessableEntityException,
-} from '@nestjs/common';
-import { Args, Query, Resolver, Mutation } from '@nestjs/graphql';
-import { UsersService } from './users.service';
-import { UsersArgs } from './dto/users.args';
-import { User } from './models/user';
+import { NotFoundException } from '@nestjs/common';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { NewUserInput } from './dto/new-user.input';
 import { UserSigninInput } from './dto/user-signin.input';
+import { UserInput } from './dto/user.input';
+import { UsersArgs } from './dto/users.args';
+import { User } from './models/user';
+import { UsersService } from './users.service';
 
 @Resolver()
 export class UsersResolver {
@@ -24,7 +22,11 @@ export class UsersResolver {
   }
 
   @Query(returns => [User])
-  async users(@Args() usersArgs: UsersArgs): Promise<User[]> {
+  async users(
+    @Args() usersArgs: UsersArgs,
+    @Context() { req },
+  ): Promise<User[]> {
+    console.log(req.session);
     return await this.usersService.findAll();
   }
 
@@ -40,7 +42,24 @@ export class UsersResolver {
   async signIn(
     @Args('userSigninInput')
     credentials: UserSigninInput,
+    @Context() { req },
   ) {
-    return await this.usersService.signIn(credentials);
+    console.log('bf signin:', req.session);
+
+    const user = await this.usersService.signIn(credentials);
+
+    req.session.userId = user.id;
+    // req.session.isAdmin = user.admin
+
+    console.log('af signin:', req.session);
+    return user;
+  }
+
+  @Mutation(returns => User)
+  async updateUser(
+    @Args('userInput')
+    userInput: UserInput,
+  ) {
+    return await this.usersService.update(userInput);
   }
 }

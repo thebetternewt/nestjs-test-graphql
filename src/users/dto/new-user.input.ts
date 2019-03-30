@@ -23,4 +23,8 @@ export class NewUserInput {
   @Field()
   @Length(3, 255)
   password: string;
+
+  @Field()
+  @Length(3, 255)
+  confirmPassword: string;
 }

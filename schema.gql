@@ -13,6 +13,7 @@ type Book {
 type Mutation {
   signup(newUserData: NewUserInput!): User!
   signIn(userSigninInput: UserSigninInput!): User!
+  updateUser(userInput: UserInput!): User!
 }
 
 input NewUserInput {
@@ -21,6 +22,7 @@ input NewUserInput {
   lastName: String!
   email: String!
   password: String!
+  confirmPassword: String!
 }
 
 type Query {
@@ -36,6 +38,16 @@ type User {
   middleName: String
   lastName: String!
   email: String!
+}
+
+input UserInput {
+  id: ID!
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  password: String
+  confirmPassword: String
 }
 
 input UserSigninInput {

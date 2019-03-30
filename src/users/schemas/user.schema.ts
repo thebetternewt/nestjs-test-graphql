@@ -1,5 +1,5 @@
+import { compare, hash } from 'bcryptjs';
 import * as mongoose from 'mongoose';
-import { hash } from 'bcryptjs';
 
 export const UserSchema = new mongoose.Schema({
   firstName: String,
@@ -15,3 +15,8 @@ UserSchema.pre('save', async function() {
     this.password = await hash(this.password, 10);
   }
 });
+
+// Check if password matches database password
+UserSchema.methods.matchesPassword = function(password) {
+  return compare(password, this.password);
+};

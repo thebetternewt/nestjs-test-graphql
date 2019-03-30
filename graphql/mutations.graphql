@@ -1,0 +1,34 @@
+mutation {
+  signup(
+    newUserData: {
+      firstName: "John"
+      lastName: "Smith"
+      email: "john@test.com"
+      password: "123456"
+      confirmPassword: "123456"
+    }
+  ) {
+    id
+    firstName
+    middleName
+    lastName
+    email
+  }
+}
+
+mutation {
+  updateUser(
+    userInput: {
+      id: "5c9f77bf5bb8722eb3ff3198"
+      middleName: "William"
+      # password: "1234567"
+      # confirmPassword: "1234567"
+    }
+  ) {
+    id
+    firstName
+    middleName
+    lastName
+    email
+  }
+}

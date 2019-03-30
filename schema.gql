@@ -4,13 +4,41 @@
 # -----------------------------------------------
 
 type Book {
-  id: String!
+  id: ID!
   title: String!
   description: String
   author: String!
 }
 
+type Mutation {
+  signup(newUserData: NewUserInput!): User!
+  signIn(userSigninInput: UserSigninInput!): User!
+}
+
+input NewUserInput {
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String!
+  password: String!
+}
+
 type Query {
   book(id: String!): Book!
-  books(skip: Int = 0, take: Int = 25, id: ID!): [Book!]!
+  books(skip: Int = 0, take: Int = 25): [Book!]!
+  user(id: String!): User!
+  users(skip: Int = 0, take: Int = 25): [User!]!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String!
+}
+
+input UserSigninInput {
+  email: String!
+  password: String!
 }

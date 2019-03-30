@@ -1,16 +1,19 @@
 import { Field, ObjectType, ID } from 'type-graphql';
 
 @ObjectType()
-export class Book {
+export class User {
   @Field(type => ID)
   id: string;
 
   @Field()
-  title: string;
+  firstName: string;
 
   @Field({ nullable: true })
-  description?: string;
+  middleName: string;
 
   @Field()
-  author: string;
+  lastName: string;
+
+  @Field()
+  email: string;
 }

@@ -1,8 +1,8 @@
 import { Max, Min } from 'class-validator';
-import { ArgsType, Field, ID, Int } from 'type-graphql';
+import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
-export class BooksArgs {
+export class UsersArgs {
   @Field(type => Int)
   @Min(0)
   skip: number = 0;

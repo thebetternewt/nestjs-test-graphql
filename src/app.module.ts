@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GraphQLDate } from 'graphql-iso-date';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BooksModule } from './books/books.module';
@@ -21,8 +22,13 @@ import { UsersModule } from './users/users.module';
         },
       },
       context: ({ req, res }) => {
-        console.log(req.session);
+        // console.log(req.session);
         return { req, res };
+      },
+      resolvers: {
+        Date: GraphQLDate,
+        // Time: GraphQLTime,
+        // Datetime: GraphQLDateTime,
       },
     }),
     BooksModule,

@@ -1,4 +1,6 @@
-import { Field, ObjectType, ID } from 'type-graphql';
+import { GraphQLDate } from 'graphql-iso-date';
+import { Field, ID, ObjectType } from 'type-graphql';
+import { Address } from './address';
 
 @ObjectType()
 export class User {
@@ -13,6 +15,18 @@ export class User {
 
   @Field()
   lastName: string;
+
+  @Field()
+  fullName: string;
+
+  @Field(type => GraphQLDate)
+  birthDate: Date;
+
+  @Field()
+  phone: string;
+
+  @Field(type => Address)
+  address: Address;
 
   @Field()
   email: string;

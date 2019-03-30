@@ -1,13 +1,13 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { NewUserInput } from './dto/new-user.input';
-import { UserSigninInput } from './dto/user-signin.input';
+import { UserSignInInput } from './dto/user-signin.input';
 import { UserInput } from './dto/user.input';
 import { UsersArgs } from './dto/users.args';
 import { User } from './models/user';
 import { UsersService } from './users.service';
 
-@Resolver()
+@Resolver(of => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
@@ -31,7 +31,7 @@ export class UsersResolver {
   }
 
   @Mutation(returns => User)
-  async signup(
+  async signUp(
     @Args('newUserData')
     newUserData: NewUserInput,
   ) {
@@ -41,7 +41,7 @@ export class UsersResolver {
   @Mutation(returns => User)
   async signIn(
     @Args('userSigninInput')
-    credentials: UserSigninInput,
+    credentials: UserSignInInput,
     @Context() { req },
   ) {
     return await this.usersService.signIn(credentials, req);

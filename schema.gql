@@ -3,6 +3,22 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Address {
+  street1: String!
+  street2: String
+  city: String!
+  state: String!
+  zipcode: String!
+}
+
+input AddressInput {
+  street1: String!
+  street2: String
+  city: String!
+  state: String!
+  zipcode: String!
+}
+
 type Book {
   id: ID!
   title: String!
@@ -10,9 +26,16 @@ type Book {
   author: String!
 }
 
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format
+outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
+representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
 type Mutation {
-  signup(newUserData: NewUserInput!): User!
-  signIn(userSigninInput: UserSigninInput!): User!
+  signUp(newUserData: NewUserInput!): User!
+  signIn(userSigninInput: UserSignInInput!): User!
   signOut: Boolean!
   updateUser(userInput: UserInput!): User!
 }
@@ -21,6 +44,9 @@ input NewUserInput {
   firstName: String!
   middleName: String
   lastName: String!
+  birthDate: Date!
+  phone: String!
+  address: AddressInput!
   email: String!
   password: String!
   confirmPassword: String!
@@ -38,6 +64,10 @@ type User {
   firstName: String!
   middleName: String
   lastName: String!
+  fullName: String!
+  birthDate: Date!
+  phone: String!
+  address: Address!
   email: String!
 }
 
@@ -46,12 +76,15 @@ input UserInput {
   firstName: String
   middleName: String
   lastName: String
+  birthDate: Date
+  phone: String
+  address: AddressInput
   email: String
   password: String
   confirmPassword: String
 }
 
-input UserSigninInput {
+input UserSignInInput {
   email: String!
   password: String!
 }

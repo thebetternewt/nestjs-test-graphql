@@ -1,11 +1,19 @@
 mutation {
-  signup(
+  signUp(
     newUserData: {
       firstName: "John"
       lastName: "Smith"
       email: "john@test.com"
       password: "123456"
       confirmPassword: "123456"
+      phone: "555-555-5555"
+      birthDate: "1985-03-30"
+      address: {
+        street1: "123 Test Street"
+        city: "Jackson"
+        state: "Mississippi"
+        zipcode: "39000"
+      }
     }
   ) {
     id
@@ -13,7 +21,30 @@ mutation {
     middleName
     lastName
     email
+    phone
+    birthDate
+    address {
+      street1
+      street2
+      city
+      state
+      zipcode
+    }
   }
+}
+
+mutation {
+  signIn(userSigninInput: { email: "john@test.com", password: "123456" }) {
+    id
+    firstName
+    middleName
+    lastName
+    email
+  }
+}
+
+mutation {
+  signOut
 }
 
 mutation {

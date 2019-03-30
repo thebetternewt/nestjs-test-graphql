@@ -1,13 +1,36 @@
 import { compare, hash } from 'bcryptjs';
 import * as mongoose from 'mongoose';
 
-export const UserSchema = new mongoose.Schema({
-  firstName: String,
-  middleName: String,
-  lastName: String,
-  email: String,
-  password: String,
-});
+export const UserSchema = new mongoose.Schema(
+  {
+    firstName: String,
+    middleName: String,
+    lastName: String,
+    birthDate: Date,
+    email: String,
+    password: String,
+    phone: String,
+    address: {
+      street1: String,
+      street2: String,
+      city: String,
+      state: String,
+      zipcode: String,
+    },
+    avatar: String,
+    admin: {
+      type: Boolean,
+      default: false,
+    },
+    active: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 // Hash password on save if modified
 UserSchema.pre('save', async function() {

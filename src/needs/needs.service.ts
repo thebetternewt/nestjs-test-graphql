@@ -10,6 +10,10 @@ import { Need } from './models/need';
 export class NeedsService {
   constructor(@InjectModel('Need') private readonly needModel: Model<Need>) {}
 
+  async findAll(): Promise<Need[]> {
+    return await this.needModel.find();
+  }
+
   async create(needData: NewNeedInput, req: Request): Promise<Need> {
     const { userId } = req.session;
     console.log(needData);

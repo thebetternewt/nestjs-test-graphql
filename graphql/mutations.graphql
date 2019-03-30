@@ -63,3 +63,30 @@ mutation {
     email
   }
 }
+
+mutation {
+  createNeed(
+    newNeedData: {
+      title: "Test Need"
+      location: {
+        address: "123 Test Street, Starkville, MS 39759"
+        lng: -88.426430
+        lat: 33.515996
+      }
+      date: "2019-03-31T08:00:00+0500"
+      notes: "Just testing..."
+      needType: LAWNCARE
+    }
+  ) {
+    id
+    title
+    location {
+      address
+      lat
+      lng
+    }
+    date
+    notes
+    needType
+  }
+}

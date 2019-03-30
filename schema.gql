@@ -103,6 +103,7 @@ input NewUserInput {
 type Query {
   book(id: String!): Book!
   books(skip: Int = 0, take: Int = 25): [Book!]!
+  getNeeds: [Need!]!
   user(id: String!): User!
   users(skip: Int = 0, take: Int = 25): [User!]!
 }

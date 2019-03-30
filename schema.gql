@@ -33,11 +33,59 @@ representation of dates and times using the Gregorian calendar.
 """
 scalar Date
 
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
+`date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
+8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Location {
+  address: String!
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  address: String!
+  lat: Float!
+  lng: Float!
+}
+
 type Mutation {
+  createNeed(newNeedData: NewNeedInput!): Need!
   signUp(newUserData: NewUserInput!): User!
   signIn(userSigninInput: UserSignInInput!): User!
   signOut: Boolean!
   updateUser(userInput: UserInput!): User!
+}
+
+type Need {
+  id: ID!
+  title: String!
+  recipient: User!
+  volunteer: User
+  location: Location!
+  date: DateTime!
+  notes: String!
+  needType: NeedType!
+}
+
+"""The type of need requested."""
+enum NeedType {
+  TRAVEL
+  LAWNCARE
+  CHILDCARE
+  HOME_MAINTENANCE
+}
+
+input NewNeedInput {
+  title: String!
+  volunteer: String
+  location: LocationInput!
+  date: DateTime!
+  notes: String!
+  needType: NeedType!
 }
 
 input NewUserInput {

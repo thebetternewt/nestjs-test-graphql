@@ -8,7 +8,7 @@ import { Request, Response } from 'express';
 import { Model } from 'mongoose';
 import { ConfigService } from 'src/config/config.service';
 import { NewUserInput } from './dto/new-user.input';
-import { UserSigninInput } from './dto/user-signin.input';
+import { UserSignInInput } from './dto/user-signin.input';
 import { UserInput } from './dto/user.input';
 import { User } from './models/user';
 
@@ -83,7 +83,7 @@ export class UsersService {
   }
 
   async signIn(
-    { email, password }: UserSigninInput,
+    { email, password }: UserSignInInput,
     req: Request,
   ): Promise<User> {
     const user = await this.userModel.findOne({ email });

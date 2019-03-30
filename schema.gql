@@ -13,6 +13,7 @@ type Book {
 type Mutation {
   signup(newUserData: NewUserInput!): User!
   signIn(userSigninInput: UserSigninInput!): User!
+  signOut: Boolean!
   updateUser(userInput: UserInput!): User!
 }
 

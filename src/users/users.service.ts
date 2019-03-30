@@ -4,7 +4,9 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Request, Response } from 'express';
 import { Model } from 'mongoose';
+import { ConfigService } from 'src/config/config.service';
 import { NewUserInput } from './dto/new-user.input';
 import { UserSigninInput } from './dto/user-signin.input';
 import { UserInput } from './dto/user.input';
@@ -12,7 +14,13 @@ import { User } from './models/user';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  private sessionName: string;
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<User>,
+    config: ConfigService,
+  ) {
+    this.sessionName = config.get('SESS_NAME');
+  }
 
   private confirmPassword = (password: string, confirm: string) =>
     password && password === confirm;
@@ -74,15 +82,34 @@ export class UsersService {
     return true;
   }
 
-  async signIn({ email, password }: UserSigninInput): Promise<User> {
+  async signIn(
+    { email, password }: UserSigninInput,
+    req: Request,
+  ): Promise<User> {
     const user = await this.userModel.findOne({ email });
 
+    // Verify user's passowrd
     if (!user || !(await user.matchesPassword(password))) {
       throw new UnprocessableEntityException(
         'Invalid email or password. Please try again.',
       );
     }
 
+    req.session.userId = user.id;
+
     return user;
+  }
+
+  async signOut(req: Request, res: Response): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      req.session.destroy(err => {
+        if (err) reject(err);
+
+        // Delete cookie from session
+        res.clearCookie(this.sessionName);
+
+        resolve(true);
+      });
+    });
   }
 }

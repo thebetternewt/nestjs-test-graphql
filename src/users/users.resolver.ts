@@ -44,15 +44,12 @@ export class UsersResolver {
     credentials: UserSigninInput,
     @Context() { req },
   ) {
-    console.log('bf signin:', req.session);
+    return await this.usersService.signIn(credentials, req);
+  }
 
-    const user = await this.usersService.signIn(credentials);
-
-    req.session.userId = user.id;
-    // req.session.isAdmin = user.admin
-
-    console.log('af signin:', req.session);
-    return user;
+  @Mutation(returns => Boolean)
+  async signOut(@Context() { req, res }) {
+    return await this.usersService.signOut(req, res);
   }
 
   @Mutation(returns => User)

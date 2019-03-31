@@ -118,6 +118,7 @@ type User {
   phone: String!
   address: Address!
   email: String!
+  location: String!
 }
 
 input UserInput {

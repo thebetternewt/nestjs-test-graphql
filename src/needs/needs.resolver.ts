@@ -11,25 +11,26 @@ import { formatLocationOutput } from '../utils/locations';
 import { NewNeedInput } from './dto/new-need.input';
 import { Need } from './models/need';
 import { NeedsService } from './needs.service';
+import { UsersService } from 'src/users/users.service';
 
 @Resolver(of => Need)
 export class NeedsResolver {
   constructor(
     private readonly needsService: NeedsService,
-  ) // private readonly usersService: UsersService,
-  {}
+    private readonly usersService: UsersService,
+  ) {}
 
-  @ResolveProperty()
+  @ResolveProperty('location')
   location(@Parent() need) {
     console.log(need);
     return formatLocationOutput(need.location);
   }
 
-  // @ResolveProperty()
-  // async recipient(@Parent() need) {
-  //   console.log(need);
-  //   return await this.usersService.findOne(need.recipient);
-  // }
+  @ResolveProperty('recipient')
+  async recipient(@Parent() need) {
+    console.log(need);
+    return await this.usersService.findOne(need.recipient);
+  }
 
   @Query(returns => [Need])
   async getNeeds(

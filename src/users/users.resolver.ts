@@ -1,5 +1,13 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Query,
+  Resolver,
+  ResolveProperty,
+  Parent,
+} from '@nestjs/graphql';
 import { NewUserInput } from './dto/new-user.input';
 import { UserSignInInput } from './dto/user-signin.input';
 import { UserInput } from './dto/user.input';
@@ -10,6 +18,12 @@ import { UsersService } from './users.service';
 @Resolver(of => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
+
+  @ResolveProperty('fullName')
+  location(@Parent() need): string {
+    console.log(need);
+    return `${need.firstName} ${need.lastName}`;
+  }
 
   @Query(returns => User)
   async user(@Args('id') id: string): Promise<User> {

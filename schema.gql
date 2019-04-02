@@ -84,7 +84,10 @@ type Need {
   date: DateTime!
   notes: String!
   needType: NeedType!
+  needDetail: NeedDetails!
 }
+
+union NeedDetails = ChildcareDetail
 
 """The type of need requested."""
 enum NeedType {

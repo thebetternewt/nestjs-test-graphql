@@ -12,8 +12,8 @@ export class ChildcareDetailsService {
     private readonly childcareDetailModel: Model<ChildcareDetail>,
   ) {}
 
-  async findOne(@Args('id') id: string): Promise<ChildcareDetail> {
-    return await this.childcareDetailModel.findById(id);
+  async findOne(@Args('need') need: string): Promise<ChildcareDetail> {
+    return await this.childcareDetailModel.findOne({ need });
   }
 
   async create(

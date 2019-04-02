@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { formatLocationInput } from 'src/utils/locations';
 import { NewNeedInput } from './dto/new-need.input';
 import { Need } from './models/need';
+import { Args } from '@nestjs/graphql';
 
 @Injectable()
 export class NeedsService {
@@ -12,6 +13,10 @@ export class NeedsService {
 
   async findAll(): Promise<Need[]> {
     return await this.needModel.find();
+  }
+
+  async findOne(@Args('id') id: string): Promise<Need> {
+    return await this.needModel.findById(id);
   }
 
   async create(needData: NewNeedInput, req: Request): Promise<Need> {

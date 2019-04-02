@@ -8,6 +8,7 @@ import { ConfigModule } from './config/config.module';
 import { NeedsModule } from './needs/needs.module';
 import { NeedsService } from './needs/needs.service';
 import { UsersModule } from './users/users.module';
+import { ChildcareDetailsModule } from './childcare-details/childcare-details.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     ConfigModule,
     NeedsModule,
+    ChildcareDetailsModule,
   ],
   controllers: [AppController],
   providers: [AppService, NeedsService],
